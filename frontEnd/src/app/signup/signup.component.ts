@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, Validators } from '@angular/forms';
 import { AngularFireAuth } from 'angularfire2/auth';
-import { Router } from '@angular/router';
 import { moveIn, fallIn } from '../router.animations';
+import { AuthenticationService } from '../common/services/authentication.service';
 
 @Component({
   selector: 'app-signup',
@@ -16,27 +17,49 @@ export class SignupComponent implements OnInit {
   state: string = '';
   error: any;
 
-  constructor(public af: AngularFireAuth, private router: Router) {
+  username = new FormControl('', [Validators.required]);
+  password = new FormControl('', [Validators.required]);
+
+  constructor(public af: AngularFireAuth, private authService: AuthenticationService) {
 
   }
 
-  onSubmit(formData) {
-    if (formData.valid) {
-      console.log(formData.value);
-      this.af.auth.createUserWithEmailAndPassword(
-        formData.value.email,
-        formData.value.password
-      ).then(
-        (success) => {
-          console.log(success);
-          this.router.navigate(['/members'])
-        }).catch(
-        (err) => {
-          console.log(err);
-          this.error = err;
-        })
-    }
+  getErrorMessageForUsername() {
+    const hasError = this.username.hasError('required');
+    return hasError ? 'User email is required' : '';
   }
+
+  getErrorMessageForPassword() {
+    const hasError = this.password.hasError('required');
+    return hasError ? 'Contraseña is required' : '';
+  }
+
+
+  onSubmit(event: Event) {
+    event.preventDefault();
+
+    this.authService.logIn(this.username.value, this.password.value).subscribe(() => {
+      this.authService.token(this.username.value, this.password.value);
+      
+    },
+      (error) => {
+        this.error = error.error.ModelState[""][0];
+        this.authService.user = this.authService.settingInitUser;
+      }
+    );
+
+    // this.af.auth.createUserWithEmailAndPassword(
+    //   this.username.value,
+    //   this.password.value
+    // ).then(
+    //   (success) => {
+
+    //   }).catch(
+    //   (err) => {
+    //     this.error = err;
+    //   })
+  }
+
 
   ngOnInit() {
   }

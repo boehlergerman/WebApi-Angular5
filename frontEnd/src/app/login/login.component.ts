@@ -1,3 +1,4 @@
+import { AuthenticationService } from './../common/services/authentication.service';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { Component, OnInit, HostBinding } from '@angular/core';
 import * as firebase from 'firebase/app';
@@ -15,10 +16,10 @@ import { moveIn } from '../router.animations';
 export class LoginComponent implements OnInit {
 
   error: any;
-  constructor(public af: AngularFireAuth, private router: Router) {
+  constructor(public af: AngularFireAuth, private router: Router, private _autService: AuthenticationService) {
 
     this.af.authState.map(auth => {
-      if (auth) 
+      if (auth)
         this.router.navigateByUrl('/members');
     });
   }
@@ -28,7 +29,21 @@ export class LoginComponent implements OnInit {
       new firebase.auth.FacebookAuthProvider()
     ).then(
       (success) => {
-        this.router.navigate(['/members']);
+        let user = firebase.auth().currentUser;
+        // False not exist
+        const pass = `${user.uid}@`;
+        if (this._autService.token(user.email, pass) === false) {
+          this._autService.logIn(user.email, pass).subscribe(() => {
+            this._autService.token(user.email, pass);
+
+            this.router.navigate(['/members']);
+          },
+            (error) => {
+              this.error = error.error.ModelState[""][0];
+              this._autService.user = this._autService.settingInitUser;
+            }
+          );
+        }
       }).catch(
       (err) => {
         this.error = err;
@@ -40,7 +55,21 @@ export class LoginComponent implements OnInit {
       new firebase.auth.GoogleAuthProvider()
     ).then(
       (success) => {
-        this.router.navigate(['/members']);
+        let user = firebase.auth().currentUser;
+        // False not exist
+        const pass = `${user.uid}@`;
+        if (this._autService.token(user.email, pass) === false) {
+          this._autService.logIn(user.email, pass).subscribe(() => {
+            this._autService.token(user.email, pass);
+
+            this.router.navigate(['/members']);
+          },
+            (error) => {
+              this.error = error.error.ModelState[""][0];
+              this._autService.user = this._autService.settingInitUser;
+            }
+          );
+        }
       }).catch(
       (err) => {
         this.error = err;

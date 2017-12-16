@@ -4,12 +4,20 @@
 
   <span class="error" *ngIf="error" [@fallIn]='state'>{{ error }}</span>
 
-  <form #formData='ngForm' (ngSubmit)="onSubmit(formData)">
+  <form (ngSubmit)="onSubmit($event)">
 
-    <input type="text" placeholder="Email address.." (ngModel)="email" name="email" class="txt" required>
-    <input type="password" placeholder="Password" (ngModel)="password" name="password" class="txt" required>
+    <mat-form-field class="full-width">
+      <input matInput placeholder="Email" [formControl]="username" required>
+      <mat-error *ngIf="username.invalid">{{ getErrorMessageForUsername() }}</mat-error>
+    </mat-form-field>
 
-    <button type="submit" [disabled]="!formData.valid" class="basic-btn">Log in</button>
-    <a routerLink="/signup" class="alc">Don't have an account?</a>
-</form>
+    <mat-form-field class="full-width">
+      <input matInput id="password" type="password" placeholder="Password" [formControl]="password" required>
+      <mat-error *ngIf="password.invalid">{{ getErrorMessageForPassword() }}</mat-error>
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" [disabled]="username.invalid || password.invalid">
+      Login
+    </button>
+  </form>
 </div>

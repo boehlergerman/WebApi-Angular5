@@ -1,3 +1,4 @@
+import { AuthenticationService } from './../common/services/authentication.service';
 import { Component, OnInit } from '@angular/core';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { Router } from '@angular/router';
@@ -15,15 +16,15 @@ export class MembersComponent implements OnInit {
   user: any;
   state: string = '';
 
-  constructor(public af: AngularFireAuth, private router: Router) {
+  constructor(public af: AngularFireAuth, private router: Router, private _authService: AuthenticationService) {
 
-    this.user = this.af.auth.currentUser;
+    this.user =  this._authService.user.userName;
 
   }
 
   logout() {
     this.af.auth.signOut();
-    console.log('logged out');
+    this._authService.logout();
     this.router.navigateByUrl('/login');
   }
 

@@ -1,3 +1,4 @@
+import { PublicGuard } from './common/guards/public.guard';
 import { ModuleWithProviders } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
@@ -10,9 +11,9 @@ import { EmailComponent } from './email/email.component';
 
 export const router: Routes = [
     { path: '', redirectTo: 'login', pathMatch: 'full' },
-    { path: 'login', component: LoginComponent },
-    { path: 'signup', component: SignupComponent },
-    { path: 'login-email', component: EmailComponent },
+    { path: 'login', component: LoginComponent, canActivate: [PublicGuard] },
+    { path: 'signup', component: SignupComponent, canActivate: [PublicGuard] },
+    { path: 'login-email', component: EmailComponent, canActivate: [PublicGuard] },
     { path: 'members', component: MembersComponent, canActivate: [AuthGuard] }
 
 ]

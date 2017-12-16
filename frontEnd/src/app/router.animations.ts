@@ -1,5 +1,7 @@
 import {trigger, state, animate, style, transition} from '@angular/core';
 
+// in the mail it said "have fun" and this class is proof that I take it seriously, it can fail :P
+
 export function moveIn() {
   return trigger('moveIn', [
     state('void', style({position: 'fixed', width: '100%'}) ),
