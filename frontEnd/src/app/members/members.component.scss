@@ -39,6 +39,16 @@ h2 {
     max-height: 500px;
   }
 
+  .header {
+    min-height: 64px;
+    padding: 8px 24px 0;
+  }
+  
+  .mat-form-field {
+    font-size: 14px;
+    width: 100%;
+  }
+
 
 @media (max-width: 600px) {
     #page {

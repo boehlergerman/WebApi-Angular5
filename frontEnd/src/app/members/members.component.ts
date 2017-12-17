@@ -29,6 +29,12 @@ export class MembersComponent implements OnInit {
 
   }
 
+  applyFilter(filterValue: string) {
+    filterValue = filterValue.trim(); // Remove whitespace
+    filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
+    this.dataSource.filter = filterValue;
+  }
+
   logout() {
     this.af.auth.signOut();
     this._authService.logout();
