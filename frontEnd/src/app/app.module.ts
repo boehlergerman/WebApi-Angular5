@@ -1,3 +1,4 @@
+import { DialogConfirm } from './members/members.component';
 // since it is a simple program, the decision is made not to use lazy loading and generate individual modules,
 // using a single main module for the application.
 
@@ -18,7 +19,7 @@ import {
   MatMenuModule,
   MatSortModule,
   MatTableModule,
-  MatPaginatorModule, MatDialogModule, MatPaginatorIntl
+  MatPaginatorModule, MatDialogModule, MatPaginatorIntl, MatSelectModule
 } from '@angular/material';
 
 import { AppComponent } from './app.component';
@@ -27,7 +28,7 @@ import { AngularFireModule } from 'angularfire2';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 
-import { Ng2Webstorage } from 'ngx-webstorage'
+import { Ng2Webstorage } from 'ngx-webstorage';
 
 // Component
 import { LoginComponent } from './login/login.component';
@@ -36,13 +37,14 @@ import { SignupComponent } from './signup/signup.component';
 import { MembersComponent } from './members/members.component';
 import { NotFoundComponent } from './common/not-found/not-found.component';
 
-//Providers
+// Providers
 import { AuthGuard } from './common/guards/auth.guard';
 import { PublicGuard } from './common/guards/public.guard';
 import { AuthenticationService } from './common/services/authentication.service';
 import { routes } from './app.routes';
 import { TokenInterceptor } from './members/interceptors/token.interceptor';
 import { ProductService } from './members/services/product.service';
+import { EditProductComponent } from './members/edit-product/edit-product.component';
 
 export const firebaseConfig = {
   apiKey: 'AIzaSyA3IpvqipPoQALS-8MoXcCqrIVJlovf2aw',
@@ -60,7 +62,9 @@ export const firebaseConfig = {
     EmailComponent,
     SignupComponent,
     MembersComponent,
-    NotFoundComponent
+    NotFoundComponent,
+    EditProductComponent,
+    DialogConfirm
   ],
   imports: [
     // Core
@@ -79,15 +83,19 @@ export const firebaseConfig = {
     MatPaginatorModule,
     MatSortModule,
     MatMenuModule,
-    MatIconModule,
     MatDialogModule,
     MatGridListModule,
+    MatSelectModule,
     // Custom
     Ng2Webstorage,
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFirestoreModule.enablePersistence(),
     AngularFireAuthModule,
     routes
+  ],
+  entryComponents: [
+    EditProductComponent,
+    DialogConfirm
   ],
   providers: [
     AuthGuard,

@@ -1,0 +1,38 @@
+<form #editForm="ngForm" (ngSubmit)="onSubmit($event)">
+
+  <div class="b-controls-container">
+
+    <mat-form-field>
+      <input matInput placeholder="Name" [formControl]="name" [(ngModel)]="product.Name" required>
+      <mat-error *ngIf="name.invalid">{{getErrorMessageForName()}}</mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput placeholder="Price" [formControl]="price" [(ngModel)]="product.Price" required>
+      <mat-error *ngIf="price.invalid">{{getErrorMessageForPrice()}}</mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-select placeholder="Type Product" [formControl]="typeProductId" [(ngModel)]="product.TypeProductId" 
+      [(value)]="product.TypeProductId" name="type" required>
+        <mat-option *ngFor="let type of typeProducts" [value]="type.Id">
+          {{ type.Name }}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="typeProductId.invalid">{{getErrorMessageForType()}}</mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <textarea matInput placeholder="Description" [formControl]="description" [(ngModel)]="product.Description" required
+      matTextareaAutosize matAutosizeMinRows="2" matAutosizeMaxRows="20"></textarea>
+    </mat-form-field>
+
+
+    <div class="clearfix">
+      <button mat-raised-button color="primary" [disabled]="isBeingSaved">
+        Save
+      </button>
+    </div>
+  </div>
+
+</form>

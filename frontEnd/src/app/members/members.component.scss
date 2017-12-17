@@ -10,9 +10,31 @@ header {
 }
 
 .basic-btn {
-    width:100px;
     margin:0;
 }
+
+.basic-text {
+    margin: 0;
+    color: white;
+    text-align: right;
+    margin: 10px 10px 10px 0px;
+}
+
+[class*="flex-container"] {
+    display: flex;
+    justify-content: space-between;
+    & > div {
+      &:nth-of-type(2) {
+        margin-left: -25%;
+        width: 25%;
+      }
+      &:nth-of-type(3) {
+        text-align: right;
+        margin-right: -25%;
+        width: 25%;
+      }
+    }
+  }
 
 #page {
     padding:3em;
@@ -25,6 +47,10 @@ header {
 
 h2 {
     margin:0;
+}
+
+#actions {
+    text-align: left;
 }
 
 .container {
@@ -48,6 +74,11 @@ h2 {
     font-size: 14px;
     width: 100%;
   }
+
+#new {
+    margin: 10px 0px 15px 20px;
+    max-width: 130px;
+}
 
 
 @media (max-width: 600px) {

@@ -26,7 +26,6 @@ export class AuthenticationService {
 
   public isLoggedIn() {
     const user = this.locker.retrieve('user');
-    console.log(user);
     if (!!user) {
       this.user = user;
       this.hasSession = true;
@@ -50,7 +49,7 @@ export class AuthenticationService {
     body.set('username', username);
     body.set('password', password);
 
-    
+
     this.http
       .post(`${this.apiAuthBaseURL}/Token`, body.toString()).subscribe(data => {
         this.user.access_token = data["access_token"];

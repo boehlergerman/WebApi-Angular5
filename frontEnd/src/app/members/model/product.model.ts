@@ -1,9 +1,10 @@
 import { TypeProduct } from "./typeProduct.model";
 
 export class Product {
-    id?: number;
-    name?: string;
-    description?: string;
-    price?: number;
-    typeProduct?: TypeProduct;
+    Id?: number;
+    Name?: string;
+    Description?: string;
+    Price?: number;
+    TypeProductId?: number;
+    TypeProduct?: TypeProduct;
 }
