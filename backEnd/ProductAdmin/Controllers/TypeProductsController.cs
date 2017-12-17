@@ -28,12 +28,14 @@ namespace ProductAdmin.Controllers
         }
 
         // GET: api/TypeProducts
+        [Authorize]
         public IQueryable<TypeProduct> GetTypeProducts()
         {
             return db.TypeProducts;
         }
 
         // GET: api/TypeProducts/5
+        [Authorize]
         [ResponseType(typeof(TypeProduct))]
         public IHttpActionResult GetTypeProduct(int id)
         {
@@ -47,6 +49,7 @@ namespace ProductAdmin.Controllers
         }
 
         // PUT: api/TypeProducts/5
+        [Authorize]
         [ResponseType(typeof(void))]
         public IHttpActionResult PutTypeProduct(int id, TypeProduct typeProduct)
         {
@@ -83,6 +86,7 @@ namespace ProductAdmin.Controllers
         }
 
         // POST: api/TypeProducts
+        [Authorize]
         [ResponseType(typeof(TypeProduct))]
         public IHttpActionResult PostTypeProduct(TypeProduct typeProduct)
         {
@@ -98,6 +102,7 @@ namespace ProductAdmin.Controllers
         }
 
         // DELETE: api/TypeProducts/5
+        [Authorize]
         [ResponseType(typeof(TypeProduct))]
         public IHttpActionResult DeleteTypeProduct(int id)
         {
