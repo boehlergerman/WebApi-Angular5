@@ -24,8 +24,10 @@ namespace ProductAdmin.Controllers
             var products = from b in db.Products
                            select new ProductDTO()
                            {
+                               Id = b.Id,
                                Name = b.Name,
                                Price = b.Price,
+                               TypeProductId = b.TypeProductId,
                                TypeProductName = b.TypeProduct.Name,
                                Description = b.Description
                            };
@@ -112,8 +114,10 @@ namespace ProductAdmin.Controllers
 
             var dto = new ProductDTO()
             {
+                Id = product.Id,
                 Name = product.Name,
                 Price = product.Price,
+                TypeProductId = product.TypeProductId,
                 TypeProductName = product.TypeProduct.Name,
                 Description = product.Description
             };
