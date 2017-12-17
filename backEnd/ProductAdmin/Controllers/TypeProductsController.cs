@@ -14,7 +14,18 @@ namespace ProductAdmin.Controllers
 {
     public class TypeProductsController : ApiController
     {
-        private ProductServiceContext db = new ProductServiceContext();
+        // private ProductServiceContext db = new ProductServiceContext();
+
+        // modify the type of the db field
+        private IProductServiceContext db = new ProductServiceContext();
+
+        // add these contructors
+        public TypeProductsController() { }
+
+        public TypeProductsController(IProductServiceContext context)
+        {
+            db = context;
+        }
 
         // GET: api/TypeProducts
         public IQueryable<TypeProduct> GetTypeProducts()
@@ -49,7 +60,8 @@ namespace ProductAdmin.Controllers
                 return BadRequest();
             }
 
-            db.Entry(typeProduct).State = EntityState.Modified;
+            // db.Entry(typeProduct).State = EntityState.Modified;
+            db.MarkAsModified(typeProduct);
 
             try
             {
