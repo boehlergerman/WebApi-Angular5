@@ -5,7 +5,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 // Animations
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -41,6 +41,8 @@ import { AuthGuard } from './common/guards/auth.guard';
 import { PublicGuard } from './common/guards/public.guard';
 import { AuthenticationService } from './common/services/authentication.service';
 import { routes } from './app.routes';
+import { TokenInterceptor } from './members/interceptors/token.interceptor';
+import { ProductService } from './members/services/product.service';
 
 export const firebaseConfig = {
   apiKey: 'AIzaSyA3IpvqipPoQALS-8MoXcCqrIVJlovf2aw',
@@ -87,7 +89,15 @@ export const firebaseConfig = {
     AngularFireAuthModule,
     routes
   ],
-  providers: [AuthGuard, AuthenticationService, PublicGuard],
+  providers: [
+    AuthGuard,
+    AuthenticationService,
+    ProductService,
+    PublicGuard,
+    {
+      provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true
+    },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

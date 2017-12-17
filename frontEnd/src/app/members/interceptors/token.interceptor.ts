@@ -12,16 +12,25 @@ export class TokenInterceptor implements HttpInterceptor {
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const authService = this.injector.get(AuthenticationService);
+    
+    if (authService.user.access_token !== "") {
+      const token = authService.user.access_token;
+      request = request.clone({
+        setHeaders: {
+          'Api-Token': token,
+          'Authorization': `Bearer ${token}`
+        }
+      });
+    } else {
+      console.log("entre else");
+      request = request.clone({
+        setHeaders: {
+          'Content-Type': "application/x-www-form-urlencoded",
+        }
+      });
+    }
 
-    const token = authService.user ?
-      authService.user.access_token : '';
 
-    request = request.clone({
-      setHeaders: {
-        'Api-Token': token,
-        'Authorization': `Bearer ${token}`
-      }
-    });
 
     return next.handle(request);
 

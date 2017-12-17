@@ -50,11 +50,9 @@ export class AuthenticationService {
     body.set('username', username);
     body.set('password', password);
 
-    let options = {
-      headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded')
-    };
+    
     this.http
-      .post(`${this.apiAuthBaseURL}/Token`, body.toString(), options).subscribe(data => {
+      .post(`${this.apiAuthBaseURL}/Token`, body.toString()).subscribe(data => {
         this.user.access_token = data["access_token"];
         this.user.token_type = data["token_type"];
         this.user.userName = data["userName"];
