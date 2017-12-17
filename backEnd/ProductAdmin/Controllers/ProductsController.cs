@@ -24,9 +24,10 @@ namespace ProductAdmin.Controllers
             var products = from b in db.Products
                            select new ProductDTO()
                            {
-                               Id = b.Id,
                                Name = b.Name,
-                               TypeProductName = b.TypeProduct.Name
+                               Price = b.Price,
+                               TypeProductName = b.TypeProduct.Name,
+                               Description = b.Description
                            };
 
             return products;
@@ -111,9 +112,10 @@ namespace ProductAdmin.Controllers
 
             var dto = new ProductDTO()
             {
-                Id = product.Id,
                 Name = product.Name,
-                TypeProductName = product.TypeProduct.Name
+                Price = product.Price,
+                TypeProductName = product.TypeProduct.Name,
+                Description = product.Description
             };
 
             return CreatedAtRoute("DefaultApi", new { id = product.Id }, dto);
