@@ -21,10 +21,6 @@ export class EmailComponent implements OnInit {
   password = new FormControl('', [Validators.required]);
 
   constructor(public af: AngularFireAuth, private router: Router, private _authService: AuthenticationService) {
-    this.af.authState.map(auth => {
-      if (auth) 
-        this.router.navigateByUrl('/members');
-    });
   }
 
   getErrorMessageForUsername() {
@@ -38,11 +34,15 @@ export class EmailComponent implements OnInit {
   }
 
   onSubmit(event: Event) {
-    if (this._authService.token(this.username.value, this.password.value)) {
-      this.router.navigateByUrl('/members');
-    } else {
-      this.error = "Your account does not exist";
-    }
+    this._authService.token(this.username.value, this.password.value).subscribe(
+      (data) => {
+        this._authService.setUser(data);
+      },
+      (err) => {
+        this._authService.resetUser();
+        this.error = 'Your account does not exist';
+      }
+    );
   }
   ngOnInit() {
   }

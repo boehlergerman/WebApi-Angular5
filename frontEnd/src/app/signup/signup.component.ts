@@ -39,25 +39,17 @@ export class SignupComponent implements OnInit {
     event.preventDefault();
 
     this.authService.logIn(this.username.value, this.password.value).subscribe(() => {
-      this.authService.token(this.username.value, this.password.value);
-      
+      this.authService.token(this.username.value, this.password.value).subscribe(
+        (data) => {
+          this.authService.setUser(data);
+        }
+      );
     },
       (error) => {
-        this.error = error.error.ModelState[""][0];
-        this.authService.user = this.authService.settingInitUser;
+        this.error = error.error.ModelState[''][0];
+        this.authService.resetUser();
       }
     );
-
-    // this.af.auth.createUserWithEmailAndPassword(
-    //   this.username.value,
-    //   this.password.value
-    // ).then(
-    //   (success) => {
-
-    //   }).catch(
-    //   (err) => {
-    //     this.error = err;
-    //   })
   }
 
 

@@ -60,7 +60,6 @@ export class MembersComponent implements OnInit {
   }
 
   openDialogToEditProduct(isNew: boolean, product?: Product) {
-    console.log(isNew);
     const dialogRef = this.dialog.open(EditProductComponent, {
       data: {
         product: product,
@@ -84,6 +83,9 @@ export class MembersComponent implements OnInit {
   logout() {
     this.af.auth.signOut();
     this._authService.logout();
+    if (this._authService.user.access_token !== '') {
+      this._authService.user.access_token = '';
+    }
     this.router.navigateByUrl('/login');
   }
 

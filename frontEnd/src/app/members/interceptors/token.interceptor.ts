@@ -12,8 +12,7 @@ export class TokenInterceptor implements HttpInterceptor {
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const authService = this.injector.get(AuthenticationService);
-    
-    if (authService.user.access_token !== "") {
+    if (authService.user.access_token !== '') {
       const token = authService.user.access_token;
       request = request.clone({
         setHeaders: {
@@ -22,12 +21,19 @@ export class TokenInterceptor implements HttpInterceptor {
         }
       });
     } else {
-      console.log("entre else");
-      request = request.clone({
-        setHeaders: {
-          'Content-Type': "application/x-www-form-urlencoded",
-        }
-      });
+      if (authService.user.isToken) {
+        request = request.clone({
+          setHeaders: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+          }
+        });
+      } else {
+        request = request.clone({
+          setHeaders: {
+            'Content-Type': 'application/json',
+          }
+        });
+      }
     }
 
 

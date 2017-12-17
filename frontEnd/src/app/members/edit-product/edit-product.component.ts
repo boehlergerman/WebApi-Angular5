@@ -30,7 +30,6 @@ export class EditProductComponent implements OnInit {
     }
     
     this.isNew = data["isNew"];
-    console.log(this.isNew);
   }
 
   ngOnInit() {

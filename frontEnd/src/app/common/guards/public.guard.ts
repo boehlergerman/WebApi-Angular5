@@ -12,7 +12,7 @@ export class PublicGuard implements CanActivate {
       return true;
     }
 
-    this.router.navigate([ '/members' ]);
+    this.router.navigateByUrl( '/members' );
     return false;
   }
 }

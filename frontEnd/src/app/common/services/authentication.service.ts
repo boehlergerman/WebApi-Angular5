@@ -6,17 +6,19 @@ import { Router } from '@angular/router';
 
 @Injectable()
 export class AuthenticationService {
-  apiAuthBaseURL = Config.API_SERVER_URL
+  apiAuthBaseURL = Config.API_SERVER_URL;
   user = {
-    access_token: "",
-    userName: "",
-    token_type: "",
-  }
+    access_token: '',
+    userName: '',
+    token_type: '',
+    isToken: true
+  };
   settingInitUser = {
-    access_token: "",
-    userName: "",
-    token_type: "",
-  }
+    access_token: '',
+    userName: '',
+    token_type: '',
+    isToken: true
+  };
   hasSession = false;
 
   constructor(public http: HttpClient, public locker: SessionStorageService,
@@ -35,37 +37,52 @@ export class AuthenticationService {
 
   public logIn(username: string, password: string) {
     const url = `${this.apiAuthBaseURL}/api/Account/Register`;
-
+    this.user.isToken = false;
     return this.http.post(url, {
       Email: username,
       Password: password,
       ConfirmPassword: password,
-    })
+    });
   }
 
-  public token(username: string, password: string): boolean {
+  public token(username: string, password: string) {
     let body = new URLSearchParams();
     body.set('grant_type', 'password');
     body.set('username', username);
     body.set('password', password);
 
 
-    this.http
-      .post(`${this.apiAuthBaseURL}/Token`, body.toString()).subscribe(data => {
-        this.user.access_token = data["access_token"];
-        this.user.token_type = data["token_type"];
-        this.user.userName = data["userName"];
-        this.locker.store('user', this.user);
-        this.hasSession = true;
-        this.router.navigate(['/members']);
-        return true;
-      },
-      (error: HttpErrorResponse) => {
-        this.user = this.settingInitUser;
-      }
-      );
+    const options = {
+      headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded')
+    };
+    this.user.isToken = true;
+    return this.http
+      .post(`${this.apiAuthBaseURL}/Token`, body.toString(), options);
+    // .subscribe(data => {
+    //   this.user.access_token = data['access_token'];
+    //   this.user.token_type = data['token_type'];
+    //   this.user.userName = data['userName'];
+    //   this.locker.store('user', this.user);
+    //   this.hasSession = true;
+    //   this.router.navigate(['/members']);
+    // },
+    // (error: HttpErrorResponse) => {
+    //   this.user = this.settingInitUser;
+    // }
+    // );
+  }
 
-    return false;
+  setUser(data) {
+    this.user.access_token = data['access_token'];
+    this.user.token_type = data['token_type'];
+    this.user.userName = data['userName'];
+    this.locker.store('user', this.user);
+    this.hasSession = true;
+    this.router.navigateByUrl('/members');
+  }
+
+  resetUser() {
+    this.user = this.settingInitUser;
   }
 
   public logout() {
