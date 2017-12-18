@@ -1,5 +1,5 @@
 import { Config } from './../config';
-import { Injectable } from '@angular/core';
+import { Injectable, NgZone } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { SessionStorageService } from 'ngx-webstorage';
 import { Router } from '@angular/router';
@@ -22,7 +22,7 @@ export class AuthenticationService {
   hasSession = false;
 
   constructor(public http: HttpClient, public locker: SessionStorageService,
-    private router: Router) {
+    private router: Router, public zone: NgZone) {
 
   }
 
@@ -78,7 +78,9 @@ export class AuthenticationService {
     this.user.userName = data['userName'];
     this.locker.store('user', this.user);
     this.hasSession = true;
-    this.router.navigateByUrl('/members');
+    this.zone.run(() => {
+      this.router.navigate(['/members']);
+    });
   }
 
   resetUser() {

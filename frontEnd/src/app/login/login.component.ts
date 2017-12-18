@@ -1,15 +1,15 @@
 import { AuthenticationService } from './../common/services/authentication.service';
 import { AngularFireAuth } from 'angularfire2/auth';
-import { Component, OnInit, HostBinding } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import * as firebase from 'firebase/app';
 import { Router } from '@angular/router';
-import { moveIn } from '../router.animations';
+import { moveIn, fallIn } from '../router.animations';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
-  animations: [moveIn()],
+  animations: [moveIn(), fallIn()],
   host: { '[@moveIn]': '' }
 })
 
