@@ -1,27 +1,76 @@
-# ProductAdmin
+# Welcome!
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.6.1.
+This repository shows how to make a restful api with **.Net** and **Entityframework** and an application that consumes the services of the api, made in **Angular 5**
 
-## Development server
+In both cases unit tests are used.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+## Demo
+* [Demo](http://www.phptestgb.hol.es/) - Free servers, the application may have problems. :P
 
-## Code scaffolding
+## Getting Started
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+The project is divided into 2 folders, backEnd (BE) and frontEnd (FE).
 
-## Build
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
+### Prerequisites BE
+```
+It is necessary to have already installed "visual studio 2017".
+```
 
-## Running unit tests
+### Running Api
+In the tool go to:
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+```
+compile -> compile solution
+```
 
-## Running end-to-end tests
+And
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+```
+F5 :)
+```
 
-## Further help
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+### Running the tests
+
+In the tool go to:
+```
+test -> execute -> all
+```
+
+### Prerequsites FE
+
+It is necessary to have installed:
+
+* NodeJS - [Install](https://nodejs.org/en/)
+* Angular CLI - ``` npm install -g @angular/cli ```
+
+
+
+### Running App
+
+Open the console in the directory frontEnd and execute 
+```
+npm install or npm i
+```
+once finished
+```
+ng serve
+```
+Congratulations you already have the app working.
+
+### Running the tests
+Open the console in the directory frontEnd and execute 
+```
+ng test
+```
+
+## Authors
+
+* **Boehler German** 
+
+	Have fun breaking it up.
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
