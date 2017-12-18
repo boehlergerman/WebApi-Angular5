@@ -13,7 +13,7 @@ namespace ProductAdmin
     {
         public static void Register(HttpConfiguration config)
         {
-            var origin = "http://localhost:4200, http://localhost:8888";
+            var origin = "http://localhost:4200";
             var cors = new EnableCorsAttribute(origin, "*", "*");
             config.EnableCors(cors);
 

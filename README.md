@@ -30,6 +30,14 @@ And
 F5 :)
 ```
 
+**Importante**
+If the url is not "http://localhost:2355/"when you open the browser, please go to:
+
+```
+path/frontEnd/src/app/common/config.ts
+```
+
+and change url config.
 
 ### Running the tests
 
@@ -57,6 +65,8 @@ once finished
 ```
 ng serve
 ```
+Navigate to http://localhost:4200/
+
 Congratulations you already have the app working.
 
 ### Running the tests

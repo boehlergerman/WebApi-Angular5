@@ -16,7 +16,7 @@ export class EditProductComponent implements OnInit {
   product: Product = {};
   isNew = true;
   name = new FormControl('', [Validators.required]);
-  price = new FormControl('', [Validators.required]);
+  price = new FormControl('', [Validators.required, Validators.pattern(/^[0-9]+(\.[0-9]*){0,2}$/g)]);
   description = new FormControl('', [Validators.required]);
   typeProductId = new FormControl('', [Validators.required]);
   typeProducts: Array<TypeProduct> = [];
