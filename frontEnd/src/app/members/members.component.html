@@ -24,25 +24,25 @@
         <!-- Name Column -->
         <ng-container matColumnDef="name">
           <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
-          <mat-cell *matCellDef="let element"> {{element.Name}} </mat-cell>
+          <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
         </ng-container>
 
         <!-- Price Column -->
         <ng-container matColumnDef="price">
           <mat-header-cell *matHeaderCellDef mat-sort-header> Price </mat-header-cell>
-          <mat-cell *matCellDef="let element"> {{element.Price}} </mat-cell>
+          <mat-cell *matCellDef="let element"> {{element.price}} </mat-cell>
         </ng-container>
 
         <!-- Type Column -->
         <ng-container matColumnDef="type">
           <mat-header-cell *matHeaderCellDef mat-sort-header> Type </mat-header-cell>
-          <mat-cell *matCellDef="let element"> {{element.TypeProductName}} </mat-cell>
+          <mat-cell *matCellDef="let element"> {{element.type_product.name}} </mat-cell>
         </ng-container>
 
         <!-- Description Column -->
         <ng-container matColumnDef="description">
           <mat-header-cell *matHeaderCellDef mat-sort-header> Description </mat-header-cell>
-          <mat-cell *matCellDef="let element"> {{element.Description}} </mat-cell>
+          <mat-cell *matCellDef="let element"> {{element.description}} </mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="actions">

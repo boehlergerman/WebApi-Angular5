@@ -34,7 +34,7 @@ export class EmailComponent implements OnInit {
   }
 
   onSubmit(event: Event) {
-    this._authService.token(this.username.value, this.password.value).subscribe(
+    this._authService.tokenPHP(this.username.value, this.password.value).subscribe(
       (data) => {
         this._authService.setUser(data);
       },
@@ -44,6 +44,7 @@ export class EmailComponent implements OnInit {
       }
     );
   }
+
   ngOnInit() {
   }
 

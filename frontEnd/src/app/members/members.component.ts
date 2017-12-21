@@ -50,7 +50,7 @@ export class MembersComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.productService.delete(product.Id).subscribe(
+        this.productService.delete(product.id).subscribe(
           () => {
             this.getAllProduct();
           }
@@ -60,6 +60,7 @@ export class MembersComponent implements OnInit {
   }
 
   openDialogToEditProduct(isNew: boolean, product?: Product) {
+    console.log(product);
     const dialogRef = this.dialog.open(EditProductComponent, {
       data: {
         product: product,
@@ -93,6 +94,7 @@ export class MembersComponent implements OnInit {
 
   getAllProduct() {
     this.productService.getAll().subscribe((data: Array<Product>) => {
+      console.log('awd');
       this.products = data;
       this.dataSource = new MatTableDataSource<Product>(this.products);
       this.dataSource.sort = this.sort;

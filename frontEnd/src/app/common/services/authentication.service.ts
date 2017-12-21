@@ -36,17 +36,25 @@ export class AuthenticationService {
   }
 
   public logIn(username: string, password: string) {
-    const url = `${this.apiAuthBaseURL}/api/Account/Register`;
+    const url = `${this.apiAuthBaseURL}/users`;
     this.user.isToken = false;
     return this.http.post(url, {
-      Email: username,
-      Password: password,
-      ConfirmPassword: password,
+      email: username,
+      password: password
+    });
+  }
+
+  public tokenPHP(username: string, password: string) {
+    const url = `${this.apiAuthBaseURL}/users/login`;
+    this.user.isToken = false;
+    return this.http.post(url, {
+      email: username,
+      password: password
     });
   }
 
   public token(username: string, password: string) {
-    let body = new URLSearchParams();
+    const body = new URLSearchParams();
     body.set('grant_type', 'password');
     body.set('username', username);
     body.set('password', password);
@@ -58,29 +66,19 @@ export class AuthenticationService {
     this.user.isToken = true;
     return this.http
       .post(`${this.apiAuthBaseURL}/Token`, body.toString(), options);
-    // .subscribe(data => {
-    //   this.user.access_token = data['access_token'];
-    //   this.user.token_type = data['token_type'];
-    //   this.user.userName = data['userName'];
-    //   this.locker.store('user', this.user);
-    //   this.hasSession = true;
-    //   this.router.navigate(['/members']);
-    // },
-    // (error: HttpErrorResponse) => {
-    //   this.user = this.settingInitUser;
-    // }
-    // );
   }
 
   setUser(data) {
-    this.user.access_token = data['access_token'];
-    this.user.token_type = data['token_type'];
-    this.user.userName = data['userName'];
+    console.log(data);
+    this.user.access_token = data['api_token'];
+    // this.user.token_type = data['token_type'];
+    this.user.userName = data['email'];
     this.locker.store('user', this.user);
     this.hasSession = true;
     this.zone.run(() => {
       this.router.navigate(['/members']);
     });
+    console.log(this.user);
   }
 
   resetUser() {

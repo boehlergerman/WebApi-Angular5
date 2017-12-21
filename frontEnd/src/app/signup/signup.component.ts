@@ -37,7 +37,16 @@ export class SignupComponent implements OnInit {
 
   onSubmit(event: Event) {
     event.preventDefault();
+    this.authService.logIn(this.username.value, this.password.value).subscribe((data) => {
+      this.authService.setUser(data);
+    },
+      (error) => {
+        this.error = 'Your account does not exist';
+        this.authService.resetUser();
+      });
+  }
 
+  Net() {
     this.authService.logIn(this.username.value, this.password.value).subscribe(() => {
       this.authService.token(this.username.value, this.password.value).subscribe(
         (data) => {

@@ -12,31 +12,32 @@ export class ProductService {
   constructor(public http: HttpClient, public _authService: AuthenticationService) { }
 
   getAll(): Observable<Array<Product>> {
-    const url = `${this._authService.apiAuthBaseURL}/api/Products`;
+    const url = `${this._authService.apiAuthBaseURL}/products`;
+    console.log(url);
     return this.http.get<Array<Product>>(url);
   }
 
   update(product: Product): Observable<any> {
-    const url = `${this._authService.apiAuthBaseURL}/api/Products/${product.Id}`;
+    const url = `${this._authService.apiAuthBaseURL}/products/${product.id}`;
 
     return this.http.put(url, product);
   }
 
   delete(id: number): Observable<any> {
-    const url = `${this._authService.apiAuthBaseURL}/api/Products/${id}`;
+    const url = `${this._authService.apiAuthBaseURL}/products/${id}`;
 
     return this.http.delete(url);
   }
 
   add(product: Product) {
-    const url = `${this._authService.apiAuthBaseURL}/api/Products`;
+    const url = `${this._authService.apiAuthBaseURL}/products`;
 
     return this.http.post(url, product);
   }
 
 
   getAllTypeProduct(): Observable<Array<TypeProduct>> {
-    const url = `${this._authService.apiAuthBaseURL}/api/TypeProducts`;
+    const url = `${this._authService.apiAuthBaseURL}/typeproduct`;
 
     return this.http.get<Array<TypeProduct>>(url);
   }

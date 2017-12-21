@@ -26,25 +26,22 @@ export class LoginComponent implements OnInit {
       (success) => {
         const user = firebase.auth().currentUser;
         const pass = `${user.uid}@`;
-        this._autService.token(user.email, pass).subscribe(
+        this._autService.tokenPHP(user.email, pass).subscribe(
           (data) => {
             this._autService.setUser(data);
           },
           (err) => {
-            this._autService.logIn(user.email, pass).subscribe(() => {
-              this._autService.token(user.email, pass).subscribe(
-                (data) => {
-                  this._autService.setUser(data);
-                }
-              );
+            this._autService.logIn(user.email, pass).subscribe((data) => {
+              this._autService.setUser(data);
             },
               (error) => {
-                this.error = error.error.ModelState[''][0];
+                this.error = 'was hacked';
                 this._autService.resetUser();
               }
             );
           }
         );
+
       }).catch(
       (err) => {
         this.error = err;
@@ -58,20 +55,16 @@ export class LoginComponent implements OnInit {
       (success) => {
         const user = firebase.auth().currentUser;
         const pass = `${user.uid}@`;
-        this._autService.token(user.email, pass).subscribe(
+        this._autService.tokenPHP(user.email, pass).subscribe(
           (data) => {
             this._autService.setUser(data);
           },
           (err) => {
-            this._autService.logIn(user.email, pass).subscribe(() => {
-              this._autService.token(user.email, pass).subscribe(
-                (data) => {
-                  this._autService.setUser(data);
-                }
-              );
+            this._autService.logIn(user.email, pass).subscribe((data) => {
+              this._autService.setUser(data);
             },
               (error) => {
-                this.error = error.error.ModelState[''][0];
+                this.error = 'was hacked';
                 this._autService.resetUser();
               }
             );
@@ -81,6 +74,28 @@ export class LoginComponent implements OnInit {
       (err) => {
         this.error = err;
       });
+  }
+
+  Net(user, pass) {
+    this._autService.token(user.email, pass).subscribe(
+      (data) => {
+        this._autService.setUser(data);
+      },
+      (err) => {
+        this._autService.logIn(user.email, pass).subscribe(() => {
+          this._autService.token(user.email, pass).subscribe(
+            (data) => {
+              this._autService.setUser(data);
+            }
+          );
+        },
+          (error) => {
+            this.error = error.error.ModelState[''][0];
+            this._autService.resetUser();
+          }
+        );
+      }
+    );
   }
 
   ngOnInit() {
