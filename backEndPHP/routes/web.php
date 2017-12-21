@@ -12,31 +12,52 @@
 */
 
 
-$router->post('/users/login', ['uses' => 'UsersController@getToken']);
+$router->options(
+    '/{any:.*}',
+    [
+        'middleware' => ['cors'],
+        function (){
+            return response(['status' => 'success']);
+        }
+    ]
+);
 
-$router->get('/', function () use ($router) {
-    return $router->app->version();
+// Route::get('/users/login', 'UsersController@getToken');
+
+// postman
+
+$router->group(['middleware' => ['cors']], function () use ($router) {
+    $router->post('/users/login', ['uses' => 'UsersController@getToken']);
+
+    $router->get('/', function () use ($router) {
+        return $router->app->version();
+    });
+
+    $router->get('/key', function() {
+        return str_random(32);
+    });
+
+    $router->post('/users', ['uses' => 'UsersController@createUser']);
+
+    $router->group(['middleware' => ['auth']], function () use ($router) {
+        $router->get('/users', ['uses' => 'UsersController@index']);
+
+
+        $router->get('/products', ['uses' => 'ProductsController@index']);
+        $router->post('/products', ['uses' => 'ProductsController@createProduct']);
+        $router->put('/products/{product_id}', ['uses' => 'ProductsController@updateProduct']);
+        $router->delete('/products/{product_id}', ['uses' => 'ProductsController@deleteProduct']);
+
+        $router->get('/typeproduct', ['uses' => 'TypeProductsController@index']);
+    });
+
+
 });
 
-$router->get('/key', function() {
-    return str_random(32);
-});
-
-$router->post('/users', ['uses' => 'UsersController@createUser']);
 
 
 
 
 
-$router->group(['middleware' => ['auth']], function () use ($router) {
-    $router->get('/users', ['uses' => 'UsersController@index']);
-
-    $router->get('/products', ['uses' => 'ProductsController@index']);
-    $router->post('/products', ['uses' => 'ProductsController@createProduct']);
-    $router->put('/products/{product_id}', ['uses' => 'ProductsController@updateProduct']);
-    $router->delete('/products/{product_id}', ['uses' => 'ProductsController@deleteProduct']);
-
-    $router->get('/typeproduct', ['uses' => 'TypeProductsController@index']);
-});
 
 
